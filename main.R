@@ -6,6 +6,7 @@ library(TSrepr) # devtools::install_github("PetoLau/TSrepr")
 library(smooth)
 library(forecast)
 library(party)
+# Parallel computations can be used for Linux based machines - load these packages then please:
 # library(parallel)
 # library(doParallel)
 
@@ -14,7 +15,7 @@ source("optimClusters.R")
 source("forecasting.R")
 
 seas <- 48 # frequency
-win <- 21 # size of window
+win <- 21 # size of window in days
 h <- 2 # length of forecast
 week <- 7
 dataset_load <- firstSetTrain # your dataset - in every row of a data.table is a time series (consumer)
@@ -39,9 +40,10 @@ for(i in 0:(n_hours-1)) {
   if (i %% 24 == 0) {
     
     # Compute time series representations
-    ts_repr <- repr_matrix(res_data, func = repr_lm, args = list(method = "lm", freq = c(seas, seas*7)))
+    ts_repr <- repr_matrix(res_data, func = repr_lm, args = list(method = "l1", freq = c(seas, seas*7)))
 
     # Possible to use other time series representations:
+    # ts_repr <- repr_matrix(res_data, func = repr_gam, args = list(freq = c(seas, seas*7)))
     # ts_repr <- repr_matrix(datas, func = repr_feaclip, windowing = T, win_size = seas)
     # ts_repr <- repr_matrix(res_data, func = repr_seas_profile, args = list(func = median, freq = seas))
   
@@ -56,7 +58,7 @@ for(i in 0:(n_hours-1)) {
   centroids <- t(sapply(sort(unique(clusters)), function(i) apply(check.matrix(res_data[clusters %in% i,]), 2, median)))
 
   # Forecasting
-  centr_forecasts <- ForecastClusterDisagg(centroids, parallel = F, freq = seas, h = h)
+  centr_forecasts <- ForecastClusterDisagg(centroids, parallel = F, freq = seas, h = h) # set parallel = T, for parallel computation
   
   # Denormalising forecasts
   clust_ind <- lapply(sort(unique(clusters)), function(i) which(clusters == i))
