@@ -15,4 +15,6 @@ doi: [10.1109/INFORMATICS.2017.8327248](https://doi.org/10.1109/INFORMATICS.2017
  * P. Laurinec and M. Lucká, "Clustering-based forecasting method for individual consumers electricity load using time series representations" Open Computer Science, 8(1), (2018): pp. 38-50. Retrieved 31 Jul. 2018, from doi: [10.1515/comp-2018-0006](https://doi.org/10.1515/comp-2018-0006). [Link for .pdf here](https://www.degruyter.com/downloadpdf/j/comp.2018.8.issue-1/comp-2018-0006/comp-2018-0006.pdf).
 
 
+The implementation of time series representation methods used in experiments is in the package [*TSrepr*](https://github.com/PetoLau/TSrepr).
+
 You can read more about my research here: [petolau.github.io/research/](https://petolau.github.io/research/).
